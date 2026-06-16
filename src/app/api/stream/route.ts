@@ -8,7 +8,7 @@ export const runtime = "nodejs";
 
 const ENCODER = new TextEncoder();
 /** Average gap between emitted events (ms). Tunable burst load. */
-const TICK_MS = 12200;
+const TICK_MS = 1200;
 
 function sse(data: unknown, id?: number): Uint8Array {
   const idLine = id !== undefined ? `id: ${id}\n` : "";
