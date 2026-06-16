@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens — "Mission Control" proctoring theme.
+ * Dark-first by intent: proctors run long monitoring shifts, and a dark canvas
+ * keeps high-frequency status color (the real information) legible without
+ * eye strain. All text/background pairs meet WCAG AA contrast.
+ */
+@theme {
+  --color-canvas: #0b0f14;
+  --color-surface: #131922;
+  --color-surface-2: #1b232e;
+  --color-border: #283341;
+  --color-text: #e6edf3;
+  --color-muted: #8a98a8;
+  --color-accent: #4c8dff;
+  --color-accent-weak: #1d2c45;
+
+  /* Status semantics */
+  --color-status-active: #2dbd8b;
+  --color-status-flagged: #f5a524;
+  --color-status-paused: #8a98a8;
+  --color-status-submitted: #6e7fe0;
+  --color-status-disconnected: #e0566e;
+
+  /* Risk levels */
+  --color-risk-low: #2dbd8b;
+  --color-risk-medium: #f5a524;
+  --color-risk-high: #ff8c42;
+  --color-risk-critical: #ff5c5c;
+
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Code", "JetBrains Mono",
+    Menlo, Consolas, monospace;
+
+  --radius-card: 10px;
+}
+
+html,
+body {
+  background: var(--color-canvas);
+  color: var(--color-text);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Respect reduced-motion preferences globally. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Visible keyboard focus everywhere — never removed, only restyled. */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Thin, themed scrollbars for the dense data surfaces. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 6px;
+}
+
+@keyframes flash-update {
+  from { background-color: var(--color-accent-weak); }
+  to { background-color: transparent; }
+}
+.row-flash { animation: flash-update 0.6s ease-out; }
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+.pulse-dot { animation: pulse-dot 1.6s ease-in-out infinite; }
