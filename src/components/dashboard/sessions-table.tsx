@@ -9,18 +9,18 @@ import { GRID_TEMPLATE, SessionRow } from "./session-row";
 import { EmptyState } from "./empty-state";
 import type { SortField } from "@/types";
 
-const ROW_HEIGHT = 52;
+const ROW_HEIGHT = 56;
 
-const COLUMNS: { label: string; field?: SortField; lgOnly?: boolean; cls?: string }[] = [
-  { label: "", cls: "" }, // risk rail
+const COLUMNS: { label: string; field?: SortField }[] = [
+  { label: "" }, // risk rail
   { label: "Candidate", field: "candidateName" },
-  { label: "Exam", lgOnly: true },
+  { label: "Exam" },
   { label: "Status" },
   { label: "Risk", field: "riskScore" },
-  { label: "Flags", field: "flagsCount", lgOnly: true },
-  { label: "Progress", field: "progress", lgOnly: true },
+  { label: "Flags", field: "flagsCount" },
+  { label: "Progress", field: "progress" },
   { label: "Conn." },
-  { label: "Last event", field: "lastEventAt", lgOnly: true },
+  { label: "Last event", field: "lastEventAt" },
 ];
 
 /**
@@ -69,10 +69,10 @@ export function SessionsTable() {
 
   return (
     <div className="flex min-h-0 flex-1 flex-col rounded-[var(--radius-card)] border border-border bg-surface">
-      {/* Header row, aligned to the body grid template */}
+      {/* Column header — desktop only; mobile uses condensed cards with no header. */}
       <div
         role="rowgroup"
-        className={`grid ${GRID_TEMPLATE} items-center gap-x-3 border-b border-border bg-surface-2 pr-3 text-xs font-medium text-muted`}
+        className={`hidden lg:grid ${GRID_TEMPLATE} items-center gap-x-3 border-b border-border bg-surface-2 pr-3 text-xs font-medium text-muted`}
       >
         {COLUMNS.map((c, i) => {
           const sortable = !!c.field;
@@ -90,7 +90,7 @@ export function SessionsTable() {
                     ? "none"
                     : undefined
               }
-              className={`${c.lgOnly ? "hidden lg:block" : ""} ${i === 1 ? "pl-2" : ""} py-2`}
+              className={`${i === 1 ? "pl-2" : ""} py-2`}
             >
               {sortable ? (
                 <button
